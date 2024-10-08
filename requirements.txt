@@ -6,7 +6,7 @@ blinker==1.8.2
 boltons==23.0.0
 boto3==1.35.35
 botocore==1.35.35
-Brotli @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_67j4p18ie3/croot/brotli-split_1714483158198/work
+brotli==1.0.9
 cachetools==5.5.0
 certifi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_73k3qumdla/croot/certifi_1720453498134/work/certifi
 cffi @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_229m2kq9fi/croot/cffi_1714483160856/work
