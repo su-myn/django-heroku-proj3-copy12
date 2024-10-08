@@ -32,7 +32,8 @@ h11==0.14.0
 idna==3.6
 Jinja2==3.1.4
 jmespath==1.0.1
-jsonpatch==1.33jsonpointer==2.1
+jsonpatch==1.33
+jsonpointer==2.1
 jsonschema==4.23.0
 jsonschema-specifications==2023.12.1
 kiwisolver==1.4.5
