@@ -3,6 +3,7 @@ from .forms import TodoListForm, ContactListForm, ComplainListForm, RepairListFo
 from .models import TodoList, ContactList, ComplainList, RepairList, ReplaceList, TaskList, Tag
 from django.contrib import messages
 from django.db.models import F, Count, Min
+from .filters import *
 
 # Create your views here.
 def index(request):
@@ -46,64 +47,103 @@ def contactList(request):
 	return render(request, 'table_contact_list.html', {'contact_list': contact_list, 'current_sort': sort_by})
 
 def todoList(request):
-	todo_list = TodoList.objects.all()
+    todo_list = TodoList.objects.all()
 
-	# Get the sort parameter from the URL
-	sort_by = request.GET.get('sort', '')
+    # Get the sort parameter from the URL
+    sort_by = request.GET.get('sort', '')
 
-	# Define valid sorting fields
-	valid_sort_fields_todolist = ['todo_item', 'remark', 'unit', 'category', 'status', 'date', 'day', 'created_at']
+    # Define valid sorting fields
+    valid_sort_fields_todolist = ['todo_item', 'remark', 'unit', 'category', 'status', 'date', 'day', 'created_at']
 
-	if sort_by in valid_sort_fields_todolist:
-		# Use F() to reference model fields
-		todo_list =todo_list.order_by(F(sort_by).asc(nulls_last=True))
+    if sort_by in valid_sort_fields_todolist:
+        # Use F() to reference model fields
+        todo_list = todo_list.order_by(F(sort_by).asc(nulls_last=True))
 
-	return render(request, 'table_todo_list.html', {'current_sort': sort_by, 'todo_list': todo_list})
+    myFilter = TodoListFilter(request.GET, queryset=todo_list)  # Changed todo_item to todo_list
+    todo_list = myFilter.qs  # Changed todo_item to todo_list
+    context = {'current_sort': sort_by, 'todo_list': todo_list, 'myFilter': myFilter}
+    return render(request, 'table_todo_list.html', context)
+
 
 def complainList(request):
-	complain_list = ComplainList.objects.all()
+    complain_list = ComplainList.objects.all()
 
-	# Get the sort parameter from the URL
-	sort_by = request.GET.get('sort', '')
+    # Get the sort parameter from the URL
+    sort_by = request.GET.get('sort', '')
 
-	# Define valid sorting fields
-	valid_sort_fields_complainlist = ['complain_item', 'remark', 'unit', 'status', 'date', 'reported_by', 'urgency', 'importance', 'channel', 'outcome', 'created_at']
+    # Define valid sorting fields
+    valid_sort_fields_complainlist = ['complain_item', 'remark', 'unit', 'status', 'date', 'reported_by', 'urgency',
+                                      'importance', 'channel', 'outcome', 'created_at']
 
-	if sort_by in valid_sort_fields_complainlist:
-		# Use F() to reference model fields
-		complain_list =complain_list.order_by(F(sort_by).asc(nulls_last=True))
+    if sort_by in valid_sort_fields_complainlist:
+        # Use F() to reference model fields
+        complain_list = complain_list.order_by(F(sort_by).asc(nulls_last=True))
 
-	return render(request, 'table_complain_list.html', {'current_sort': sort_by, 'complain_list': complain_list, 'messages': messages.get_messages(request)})
+    myFilterComplain = ComplainListFilter(request.GET, queryset=complain_list)
+    complain_list = myFilterComplain.qs
+    context = {
+        'current_sort': sort_by,
+        'complain_list': complain_list,
+        'myFilterComplain': myFilterComplain,
+        'messages': messages.get_messages(request)
+    }
+
+    return render(request, 'table_complain_list.html', context)
+
+
+from django.db.models import F
+from django.shortcuts import render
+
 
 def repairList(request):
-	repair_list = RepairList.objects.all()
+    repair_list = RepairList.objects.all()
 
-	# Get the sort parameter from the URL
-	sort_by = request.GET.get('sort', '')
+    # Get the sort parameter from the URL
+    sort_by = request.GET.get('sort', '')
 
-	# Define valid sorting fields
-	valid_sort_fields_repairlist = ['repair_item', 'remark', 'unit']
+    # Define valid sorting fields
+    valid_sort_fields_repairlist = ['repair_item', 'remark', 'unit']
 
-	if sort_by in valid_sort_fields_repairlist:
-		# Use F() to reference model fields
-		repair_list = repair_list.order_by(F(sort_by).asc(nulls_last=True))
+    if sort_by in valid_sort_fields_repairlist:
+        # Use F() to reference model fields
+        repair_list = repair_list.order_by(F(sort_by).asc(nulls_last=True))
 
-	return render(request, 'table_repair_list.html', {'current_sort': sort_by, 'repair_list': repair_list})
+    myFilter = RepairListFilter(request.GET, queryset=repair_list)
+    repair_list = myFilter.qs
+    context = {
+        'current_sort': sort_by,
+        'repair_list': repair_list,
+        'myFilter': myFilter
+    }
+
+    return render(request, 'table_repair_list.html', context)
+
 
 def replaceList(request):
-	replace_list = ReplaceList.objects.all()
+    replace_list = ReplaceList.objects.all()
 
-	# Get the sort parameter from the URL
-	sort_by = request.GET.get('sort', '')
+    # Get the sort parameter from the URL
+    sort_by = request.GET.get('sort', '')
 
-	# Define valid sorting fields
-	valid_sort_fields_replacelist = ['replace_item', 'remark', 'unit']
+    # Define valid sorting fields
+    valid_sort_fields_replacelist = ['replace_item', 'remark', 'unit']
 
-	if sort_by in valid_sort_fields_replacelist:
-		# Use F() to reference model fields
-		replace_list = replace_list.order_by(F(sort_by).asc(nulls_last=True))
+    if sort_by in valid_sort_fields_replacelist:
+        # Use F() to reference model fields
+        replace_list = replace_list.order_by(F(sort_by).asc(nulls_last=True))
 
-	return render(request, 'table_replace_list.html', {'current_sort': sort_by, 'replace_list': replace_list})
+    myFilter = ReplaceListFilter(request.GET, queryset=replace_list)
+    replace_list = myFilter.qs
+
+    context = {
+        'current_sort': sort_by,
+        'replace_list': replace_list,
+        'myFilter': myFilter
+    }
+
+    return render(request, 'table_replace_list.html', context)
+
+
 #--------------------------
 #-----------------
 def taskList(request):
@@ -118,7 +158,16 @@ def taskList(request):
     if sort_by in valid_sort_fields_tasklist:
         # Use F() to reference model fields
         task_list = task_list.order_by(F(sort_by).asc(nulls_last=True))
-    context = {'current_sort': sort_by, 'task_list': task_list}
+
+    myFilter = TaskListFilter(request.GET, queryset=task_list)
+    task_list = myFilter.qs
+
+    context = {
+        'current_sort': sort_by,
+        'task_list': task_list,
+        'myFilter': myFilter
+    }
+
     return render(request, 'table_task_list.html', context)
 #---------------------------
 #-------------------------------

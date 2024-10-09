@@ -41,6 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
 			{% endfor %}
 		{% endif %}
 
+		<br>
+		<div class="row">
+			<div class="col">
+				<div class="card card-body">
+					<form method="get">
+						{{myFilterComplain.form}}
+						<button class="btn btn-primary" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+
 		<h5>COMPLAIN LIST:</h5>
 		<hr>
 		<div class="card card-body">

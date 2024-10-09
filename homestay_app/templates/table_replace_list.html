@@ -41,6 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
 			{% endfor %}
 		{% endif %}
 
+		<br>
+		<div class="row">
+			<div class="col">
+				<div class="card card-body">
+					<form method="get">
+						{{myFilter.form}}
+						<button class="btn btn-primary" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+
 		<h5>REPLACE LIST:</h5>
 		<hr>
 		<div class="card card-body">
@@ -50,9 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
 					<th><a href="?sort=replace_item" class="{% if current_sort == 'replace_item' %}sort-indicator-replacelist{% endif %}">Replace Item</a></th>
 					<th><a href="?sort=remark" class="{% if current_sort == 'remark' %}sort-indicator-replacelist{% endif %}">Remark</a></th>
 					<th><a href="?sort=unit" class="{% if current_sort == 'unit' %}sort-indicator-replacelist{% endif %}">Unit</a></th>
+					<!--
 					<th><a href="?sort=status" class="{% if current_sort == 'status' %}sort-indicator-replacelist{% endif %}">Status</a></th>
 					<th><a href="?sort=date" class="{% if current_sort == 'date' %}sort-indicator-replacelist{% endif %}">Date</a></th>
 					<th><a href="?sort=day" class="{% if current_sort == 'day' %}sort-indicator-replacelist{% endif %}">Day</a></th>
+					-->
 					<th>Update</th>
 					<th>Delete</th>
 
@@ -62,9 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
 						<td>{{p.replace_item|default:"" }}</td>
 						<td>{{p.remark|default:"" }}</td>
 						<td>{{p.unit|default:"" }}</td>
+						<!--
 						<td>{{p.status|default:"" }}</td>
 						<td>{{p.date|default:"" }}</td>
 						<td>{{p.day|default:"" }}</td>
+						-->
 						<td><a href="{% url 'updateReplaceList' p.id %}">Update</a></td>
 						<td><a href="{% url 'deleteReplaceList' p.id %}">Delete</a></td>
 					</tr>
