@@ -41,6 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
 			{% endfor %}
 		{% endif %}
 
+		<br>
+		<div class="row">
+			<div class="col">
+				<div class="card card-body">
+					<form method="get">
+						{{myFilter.form}}
+						<button class="btn btn-primary" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+
 		<h5>TASK LIST:</h5>
 		<hr>
 		<div class="card card-body">
@@ -48,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			<table class="table table-sm">
 				<tr>
 					<th><a href="?sort=task_item" class="{% if current_sort == 'task_item' %}sort-indicator-tasklist{% endif %}">Task Item</a></th>
-					<th><a href="?sort=remark" class="{% if current_sort == 'remark' %}sort-indicator-tasklist{% endif %}">Role</a></th>
+					<th><a href="?sort=remark" class="{% if current_sort == 'remark' %}sort-indicator-tasklist{% endif %}">Remark</a></th>
 					<th><a href="?sort=unit" class="{% if current_sort == 'unit' %}sort-indicator-tasklist{% endif %}">Unit</a></th>
 					<th><a href="?sort=category" class="{% if current_sort == 'category' %}sort-indicator-tasklist{% endif %}">Category</a></th>
 					<th><a href="?sort=status" class="{% if current_sort == 'status' %}sort-indicator-tasklist{% endif %}">Status</a></th>
